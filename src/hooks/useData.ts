@@ -12,11 +12,11 @@ export function useProductData() {
   const products = ref<Product[]>([]);
 
   const generateData = (): Product[] => {
-    const categories = ["Electronics", "Home Appliances", "Fashion", "Books", "Toys", "Sports"];
-    const features = ["Durable", "Eco-Friendly", "Premium Quality", "Budget Friendly", "Lightweight", "Compact"];
+    const categories = ["电子产品", "家用电器", "时尚", "Books", "Toys", "Sports"];
+    const features = ["耐用", "环保", "优质", "便宜", "Lightweight", "Compact"];
     const names = [
-      "Smartphone", "Laptop", "Headphones", "Blender", "Microwave", "T-shirt",
-      "Sneakers", "Backpack", "Novel", "Action Figure", "Soccer Ball", "Yoga Mat"
+      "智能手机", "笔记本电脑", "耳机", "搅拌机", "Microwave", "T-shirt",
+      "运动鞋", "Backpack", "Novel", "玩偶", "Soccer Ball", "瑜伽垫"
     ];
 
     const data: Product[] = [];
