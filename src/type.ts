@@ -18,6 +18,8 @@ export interface UseFindReturn {
     searchTable: () => void;
     searchNext: () => void;
     highlightAndScrollToRow: (row: RowVO) => void;
+    highlightKeyword: (text: string) => string;
+    clearHighlight: () => void;
 }
 
 // 定义列配置的类型

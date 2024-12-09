@@ -15,10 +15,14 @@
         :key="column.field"
         :field="column.field"
         :title="column.title"
-      />
+      >
+        <template #default="{ row }">
+          <span v-html="highlightKeyword(row[column.field])"></span>  <!-- 使用 v-html 渲染高亮内容 -->
+        </template>
+      </vxe-column>
     </vxe-table>
     <!-- 弹窗组件 -->
-    <el-dialog width="300" v-model="dialogVisible" title="模糊查找">
+    <el-dialog width="300" v-model="dialogVisible" title="模糊查找" @close="clearHighlight">
     <!-- 选择查找字段 -->
     <el-select v-model="selectedField" placeholder="请选择查找字段" style="width: 100%;">
       <el-option
@@ -45,7 +49,7 @@ import { useAdd } from '../hooks/useAdd';
 import { useFind } from '../hooks/useFind';
 import { useInsert } from '../hooks/useInsert';
 import type { RowVO } from '../type';
-import { addRow, lastRow, columns, options } from '../constant'
+import { columns, options } from '../constant'
 
 // vxe-table 引用
 const tableRef = ref<VxeTableInstance<RowVO> | null>(null);
@@ -61,15 +65,17 @@ const displayedData = computed(() => {
   }));
 });
 
-const { addProduct, } = useAdd(products, displayedData, tableRef, lastRow); // 添加功能
+const { addProduct, } = useAdd(products, displayedData, tableRef); // 添加功能
 
-const { handleMenuClick } = useInsert(products, displayedData, addRow, tableRef);  // 插入功能
+const { handleMenuClick } = useInsert(products, displayedData, tableRef);  // 插入功能
 
 const {
   selectedField,
   searchContent,
   searchTable,
   searchNext,
+  highlightKeyword,
+  clearHighlight
 } = useFind(displayedData, tableRef); // 查找功能
 
 // 菜单配置

@@ -1,17 +1,17 @@
 import type { Ref } from 'vue';
 import type { VxeTableInstance } from 'vxe-table';
 import type { RowVO } from '../type';
+import { generateAddItem } from '../constant'
 
 export function useInsert(
   products: { value: RowVO[] },
   displayedData: { value: RowVO[] },
-  addRow: RowVO,
   tableRef: Ref<VxeTableInstance | null>
 ) {
   // 插入数据菜单点击事件
   const handleMenuClick = ({ rowIndex }: { rowIndex: number }) => {
     // 使用 splice 方法在 rowIndex 的下方插入新数据
-    products.value.splice(rowIndex + 1, 0, addRow);
+    products.value.splice(rowIndex + 1, 0, generateAddItem());
 
     // 获取插入的行的索引
     const newRowIndex = rowIndex + 1;

@@ -1,21 +1,25 @@
 import type { RowVO, ColumnConfig, Option } from './type';
 
-// 增加的一条数据、实际项目中该数据为动态的，暂时写死
-export const addRow:RowVO = {
-    category:  "小零食",
-    feature: "好吃不贵",
-    id: `ID-0${Math.random() * 5000}`,
-    name: "新插入的商品",
-    price: "$101.14"
+// 随机生成一条插入的数据
+export function generateAddItem():RowVO {
+    return {
+        category:  `小零食_${(Math.random() * 500).toFixed()}`,
+        feature: `好吃不贵_${(Math.random() * 500).toFixed()}`,
+        id: `ID-0${Math.random() * 5000}`,
+        name: `新插入的商品_${(Math.random() * 500).toFixed()}`,
+        price: `$${(Math.random() * 500).toFixed(1)}`
+    }
 }
 
-// 往列表最后一条数据、实际项目中该数据为动态的，暂时写死
-export const lastRow:RowVO = {
-    category:  "水果",
-    feature: "又大又红",
-    id: `ID-0${Math.random() * 6000}`,
-    name: "新增的商品",
-    price: "$101.14"
+// 随机生成添加到最后的数据
+export function generateLastItem():RowVO {
+    return {
+        category:  `水果_${(Math.random() * 600).toFixed()}`,
+        feature: `又大又红_${(Math.random() * 600).toFixed()}`,
+        id: `ID-0${Math.random() * 6000}`,
+        name: `新增的商品商品_${(Math.random() * 600).toFixed()}`,
+        price: `$${(Math.random() * 600).toFixed(1)}`
+    }
 }
 
 // 表头数据配置

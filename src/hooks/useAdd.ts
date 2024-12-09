@@ -1,12 +1,12 @@
 import type { VxeTableInstance } from 'vxe-table';
 import type { RowVO } from '../type';
+import { generateLastItem } from '../constant'
 
 // 定义返回的 hook 类型
 export function useAdd(
   products: { value: RowVO[] },
   displayedData: { value: RowVO[] },
   tableRef: { value: VxeTableInstance<RowVO> | null },
-  lastRow: RowVO
 ) {
   // 添加商品后的高亮
   const selectRowEvent = () => {
@@ -23,7 +23,7 @@ export function useAdd(
 
   // 添加商品
   const addProduct = () => {
-    products.value.push(lastRow);
+    products.value.push(generateLastItem());
     selectRowEvent();  // 添加商品后触发高亮
   };
 

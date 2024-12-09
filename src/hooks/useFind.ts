@@ -13,18 +13,16 @@ export function useFind(displayedData: Ref<RowVO[]>, tableRef: Ref<VxeTableInsta
     const keyword = searchContent.value.trim();
     if (!keyword) return;
 
-    const isChinese = /[\u4e00-\u9fa5]/.test(keyword);  // 判断是否包含中文
+    const isChinese = /[\u4e00-\u9fa5]/.test(keyword); // 判断是否包含中文
 
     // 筛选匹配行，只匹配选择的字段
     foundRows.value = displayedData.value.filter((row) => {
-      const value = String(row[selectedField.value]);  // 获取要查找的字段值
+      const value = String(row[selectedField.value]); // 获取要查找的字段值
       const comparisonValue = isChinese ? value : value.toLowerCase(); // 如果是中文不做大小写转换
       const comparisonKeyword = isChinese ? keyword : keyword.toLowerCase(); // 如果是中文不做大小写转换
 
       return comparisonValue.includes(comparisonKeyword); // 执行模糊查找
     });
-
-    console.log('****** find data *****', foundRows.value);
 
     // 如果找到匹配项，则高亮第一项
     if (foundRows.value.length > 0) {
@@ -53,6 +51,25 @@ export function useFind(displayedData: Ref<RowVO[]>, tableRef: Ref<VxeTableInsta
     }
   };
 
+  // 生成带有高亮样式的 HTML
+  const highlightKeyword = (text: string): string => {
+    const keyword = searchContent.value.trim();
+    if (!keyword || typeof text !== 'string') return text;
+
+    const isChinese = /[\u4e00-\u9fa5]/.test(keyword);
+    const comparisonKeyword = isChinese ? keyword : keyword.toLowerCase();
+
+    const regex = new RegExp(`(${comparisonKeyword})`, 'gi');
+    return text.replace(regex, `<span style="color: red;">$1</span>`);
+  };
+
+  // 清除高亮和搜索内容
+  const clearHighlight = () => {
+    searchContent.value = ''; // 清空搜索内容
+    foundRows.value = []; // 清空找到的行
+    currentIndex.value = -1; // 重置当前索引
+  };
+
   return {
     selectedField,
     searchContent,
@@ -60,6 +77,9 @@ export function useFind(displayedData: Ref<RowVO[]>, tableRef: Ref<VxeTableInsta
     currentIndex,
     searchTable,
     searchNext,
-    highlightAndScrollToRow
+    highlightAndScrollToRow,
+    highlightKeyword,
+    clearHighlight
   };
 }
+
