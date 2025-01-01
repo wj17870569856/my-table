@@ -17,21 +17,21 @@
         :title="column.title"
       >
         <template #default="{ row }">
-          <span v-html="highlightKeyword(row[column.field])"></span>  <!-- 使用 v-html 渲染高亮内容 -->
+          <span v-html="highlightKeyword(row[column.field])"></span>
         </template>
       </vxe-column>
     </vxe-table>
     <!-- 弹窗组件 -->
-    <el-dialog width="300" v-model="dialogVisible" title="模糊查找" @close="clearHighlight">
+    <el-dialog width="300" v-model="dialogVisible" title="模糊查找" @close="clearHighlight" :modal="false" :draggable="true">
     <!-- 选择查找字段 -->
-    <el-select v-model="selectedField" placeholder="请选择查找字段" style="width: 100%;">
-      <el-option
-        v-for="option in options"
-        :key="option.value"
-        :label="option.label"
-        :value="option.value"
-      />
-    </el-select>
+      <el-select v-model="selectedField" placeholder="请选择查找字段" style="width: 100%;">
+        <el-option
+          v-for="option in options"
+          :key="option.value"
+          :label="option.label"
+          :value="option.value"
+        />
+      </el-select>
       <el-input v-model="searchContent" placeholder="输入关键词进行查找"></el-input>
       <template v-slot:footer>
         <el-button type="primary" @click="searchTable">查找</el-button>
@@ -50,6 +50,7 @@ import { useFind } from '../hooks/useFind';
 import { useInsert } from '../hooks/useInsert';
 import type { RowVO } from '../type';
 import { columns, options } from '../constant'
+import { draggable } from 'element-plus/es/components/color-picker/src/utils/draggable.mjs';
 
 // vxe-table 引用
 const tableRef = ref<VxeTableInstance<RowVO> | null>(null);
